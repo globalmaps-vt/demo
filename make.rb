@@ -84,7 +84,7 @@ def polygons
     %w{BJ030 #ccf 0.5}, # glacier
     %w{BJ100 #ccf 0.5}, # snow field
     %w{FA001 #fffcdb 0.1}, # administrative area
-    %w{XX501 #ff0 0.8}, # landmask area
+    %w{XX501 #ff0 0.1}, # landmask area
   ].each {|r|
   s += <<-EOS
   map.addLayer({
