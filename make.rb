@@ -120,6 +120,8 @@ def mapboxgl(country, version)
 <style>
 body { margin:0; padding:0; }
 #map { position:absolute; top:0; bottom:0; width:100%; }
+table { border-collapse: collapse; }
+td { border: 1px solid #b9b9b9; }
 </style>
 </head>
 <body>
@@ -147,6 +149,56 @@ map.on('load', function () {
 #{points}
 #{polygons}
 });
+describe = function(f_code) {
+  return '('  + {
+    'AN010': 'railway',
+    'AN500': 'raliway network link',
+    'AP030': 'road',
+    'AP050': 'trail',
+    'AP500': 'road network link',
+    'AQ040': 'bridge',
+    'AQ070': 'ferry route',
+    'AQ130': 'tunnel',
+    'BA010': 'coastline',
+    'BH140': 'river',
+    'BH210': 'inland shoreline',
+    'BH502': 'watercourse',
+    'BI020': 'dam',
+    'BI030': 'lock',
+    'FA000': 'administrative boundary',
+    'XX500': 'sea limit',
+
+    'AL020': 'builtup area',
+    'AL105': 'settlement',
+    'AN060': 'railroad yard',
+    'AP020': 'interchange',
+    'AQ062': 'crossing',
+    'AQ063': 'road intersection',
+    'AQ080': 'ferry site',
+    'AQ090': 'entrance / exit',
+    'AQ125': 'station',
+    'AQ135': 'vehicle stopping area',
+    'BH170': 'spring',
+    'BH503': 'hydrographic network node',
+    'BI029': 'dam',
+    'BI030': 'lock',
+    'GB005': 'airport',
+    'ZD040': 'named location',
+
+    'AL020': 'builtup area',
+    'BA020': 'foreshore',
+    'BA030': 'island',
+    'BA040': 'water',
+    'BH000': 'inland water',
+    'BH080': 'lake / pond',
+    'BH130': 'reservoir',
+    'BJ030': 'glacier',
+    'BJ100': 'snow field',
+    'FA001': 'administrative area',
+    'XX501': 'landmask area'
+
+  }[f_code] + ')';
+}
 map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
     //layers: ['FA001-pg']
@@ -154,14 +206,14 @@ map.on('click', function(e) {
   if (!features.length) return;
   var s = features.length + ' features.<br/>';
   for(var i in features) {
-    var f_code = features[i].properties.f_code;
-    s += f_code;
-    if(f_code == 'FA001') {
-      s += ' ' + features[i].properties.nam + ' ' + features[i].properties.laa;
+    s += '<table><tr>'
+    for(var j in features[i].properties) {
+      var v = features[i].properties[j];
+      s += "<td>" + j + ": " +
+        v + (j == 'f_code' ? describe(v) : '') + "</td>";
     }
-    s += '<br/>';
+    s += '</tr></table>';
   }
-  var feature = features[0];
   var popup = new mapboxgl.Popup()
     .setLngLat(map.unproject(e.point))
     .setHTML(s)
