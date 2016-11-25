@@ -38,32 +38,32 @@ end
 def points
   s = ''
   [
-    %w{AL020}, # builtup area
-    %w{AL105}, # settlement
+    %w{AL020 nam}, # builtup area
+    %w{AL105 nam}, # settlement
     %w{AN060}, # railroad yard
     %w{AP020}, # interchange
     %w{AQ062}, # crossing
     %w{AQ063}, # road intersection
-    %w{AQ080}, # ferry site
+    %w{AQ080 nam}, # ferry site
     %w{AQ090}, # entrance / exit
-    %w{AQ125}, # station
+    %w{AQ125 nam}, # station
     %w{AQ135}, # vehicle stopping area
     %w{BH170}, # spring
     %w{BH503}, # hydrographic network node
     %w{BI029}, # dam
     %w{BI030}, # lock
-    %w{GB005}, # airport
-    %w{ZD040} # named location
+    %w{GB005 nam}, # airport
+    %w{ZD040 namn1} # named location
   ].each {|r|
   s += <<-EOS
   map.addLayer({
     'id': '#{r[0]}-pt', 'type': 'symbol',
     'source': 'globalmaps-vt', 'source-layer': '#{r[0]}',
     'paint': {
-      'text-color': #{r[1] ? '\'' + r[1] + '\'' : 'randomColor()'}
+      'text-color': #{r[2] ? '\'' + r[2] + '\'' : 'randomColor()'}
     },
     'layout': {
-      'text-field': '*',
+      'text-field': '#{r[1] ? '{' + r[1] + '}' : '*'}',
     }
   });
   EOS
