@@ -73,18 +73,18 @@ end
 
 def polygons
   s = ''
-  [
-    %w{AL020 #f00 0.3}, # builtup area
-    %w{BA020 #e3f3f7 0.5}, # foreshore
+  [ # re-ordered for drawing
+    %w{XX501 #ff0 0.1}, # landmask area
     %w{BA030}, # island
+    %w{BA020 #e3f3f7 0.5}, # foreshore
+    %w{FA001 #fffcdb 0.1}, # administrative area
     %w{BA040 #e3f3f7 0.8}, # water
     %w{BH000 #5494a8 0.8}, # inland water
     %w{BH080 #e3f3f7 0.8}, # lake / pond
     %w{BH130 #e3f3f7 0.8}, # reservoir
     %w{BJ030 #ccf 0.5}, # glacier
     %w{BJ100 #ccf 0.5}, # snow field
-    %w{FA001 #fffcdb 0.1}, # administrative area
-    %w{XX501 #ff0 0.1}, # landmask area
+    %w{AL020 #f00 0.3}, # builtup area
   ].each {|r|
   s += <<-EOS
   map.addLayer({
@@ -145,9 +145,9 @@ map.on('load', function () {
     tiles: ['#{tiles_path}'],
     type: 'vector', maxzoom: 8
   });
+#{polygons}
 #{lines}
 #{points}
-#{polygons}
 });
 describe = function(f_code) {
   return '('  + {
