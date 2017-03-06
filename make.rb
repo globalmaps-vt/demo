@@ -23,7 +23,7 @@ def lines
   s += <<-EOS
   map.addLayer({
     'id': '#{r[0]}',
-    'type': 'line', 'source': 'globalmaps-vt', 'source-layer': '#{r[0]}',
+    'type': 'line', 'source': 'globalmaps-vt', 'source-layer': 'ls#{r[0]}',
     'layout': {'line-join': 'round', 'line-cap': 'round'},
     'paint': {
       'line-color': #{r[1] ? '\'' + r[1] + '\'' : 'randomColor()'},
@@ -58,7 +58,7 @@ def points
   s += <<-EOS
   map.addLayer({
     'id': '#{r[0]}-pt', 'type': 'symbol',
-    'source': 'globalmaps-vt', 'source-layer': '#{r[0]}',
+    'source': 'globalmaps-vt', 'source-layer': 'pt#{r[0]}',
     'paint': {
       'text-color': #{r[2] ? '\'' + r[2] + '\'' : 'randomColor()'}
     },
@@ -89,7 +89,7 @@ def polygons
   s += <<-EOS
   map.addLayer({
     'id': '#{r[0]}-pg', 'type': 'fill',
-    'source': 'globalmaps-vt', 'source-layer': '#{r[0]}',
+    'source': 'globalmaps-vt', 'source-layer': 'pg#{r[0]}',
     'paint': {
       'fill-color': #{r[1] ? '\'' + r[1] + '\'' : 'randomColor()'},
       'fill-opacity': #{r[2] ? r[2] : 0.8}
